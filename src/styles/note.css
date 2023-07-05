@@ -67,9 +67,202 @@
 .note-content blockquote p {
   display: inline;
 }
-.note-content code {
+/* .note-content code {
   color: var(--text-sub);
+} */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*  START OF CODE CSS */
+
+/**
+ * Add back the container background-color, border-radius, padding, margin
+ * and overflow that we removed from <pre>.
+ */
+
+ .gatsby-code-title {
+  margin-bottom: -1rem;
+  position: relative;
+  z-index: 99;
+  padding: 0.5em 1em;
+  font-family: Consolas, 'Andale Mono WT', 'Andale Mono', 'Lucida Console',
+    'Lucida Sans Typewriter', 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono',
+    'Liberation Mono', 'Nimbus Mono L', Monaco, 'Courier New', Courier,
+    monospace;
+
+  background-color: #444;
+  color: white;
+
+  border-top-left-radius: 0.3em;
+  border-top-right-radius: 0.3em;
 }
+
+
+ .gatsby-highlight {
+  background-color: #fdf6e3;
+
+  margin: 0.5em 0;
+  padding: 3em;
+  overflow: auto;
+  max-height: 60vh;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+
+
+
+.gatsby-highlight pre code[class*="language-"]{
+  /* overflow-x: hidden; */
+  width: max-content;
+
+}
+.gatsby-highlight pre code[class*="language-shell"]{
+  /* overflow-x: hidden; */
+  width: 1500px;
+
+}
+
+/* Custom scrollbar for Chrome, Safari and Opera */
+.gatsby-highlight::-webkit-scrollbar {
+  width: 3px;
+  height: 0px;
+
+}
+
+.gatsby-highlight::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 2.5em;
+  margin-top: 2px;
+  margin-bottom: 2px;
+}
+
+.gatsby-highlight::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 3em;
+}
+
+.gatsby-highlight::-webkit-scrollbar-thumb:hover {
+  background: #333;
+  border-radius: 3em;
+}
+
+/**
+ * Remove the default PrismJS theme background-color, border-radius, margin,
+ * padding and overflow.
+ * 1. Make the element just wide enough to fit its content.
+ * 2. Always fill the visible space in .gatsby-highlight.
+ * 3. Adjust the position of the line numbers
+ */
+.gatsby-highlight pre[class*="language-"] {
+  background-color: transparent;
+  margin: 0;
+  padding: 0;
+  overflow: initial;
+  float: left; /* 1 */
+  min-width: 100%; /* 2 */
+}
+
+/**
+ * If you already use line highlighting
+ */
+
+/* Adjust the position of the line numbers */
+.gatsby-highlight pre[class*="language-"].line-numbers {
+  padding-left: 2.8em;
+}
+
+/**
+ * If you only want to use line numbering
+ */
+
+.gatsby-highlight {
+  background-color: #fff;
+  position: relative;
+  margin: 0.5em 0;
+  padding: 1em;
+  overflow: auto;
+  border: #666 1px solid;
+  border-radius: 0.3em;
+
+}
+
+.gatsby-highlight pre[class*="language-"].line-numbers {
+  padding: 0;
+  padding-left: 2.8em;
+  overflow: initial;
+}
+pre code {
+  padding: 0 !important;
+}
+
+.command-line-prompt > span:before {
+  color: #999;
+  content: " ";
+  display: block;
+  padding-right: 0.8em;
+}
+
+.command-line-prompt{
+  
+}
+
+.command-line-prompt span{
+  min-height: 1.5em;
+  display: block;
+}
+
+/* Prompt for all users */
+.command-line-prompt > span[data-user]:before {
+  content: "[" attr(data-user) "@" attr(data-host) "] $";
+  font-size: 1em;
+  line-height: 1.5;
+
+}
+
+/* Prompt for root */
+.command-line-prompt > span[data-user="root"]:before {
+  content: "[" attr(data-user) "@" attr(data-host) "] #";
+  font-size: 1em;
+  line-height: 1.5;
+
+}
+
+.command-line-prompt > span[data-prompt]:before {
+  content: attr(data-prompt);
+  font-size: 1em;
+  line-height: 1.5;
+
+}
+
+
+/* END OF CODE CSS */
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 .note-list .note-area {
   padding: 10px;
@@ -107,6 +300,13 @@
 }
 
 .tippy-box {
-  max-height: 14rem;
+  height: fit-content;
+  max-height: 18rem;
   overflow: auto;
+}
+
+.mermaid svg{
+  width: 100%;
+  height: auto;
+  max-height: 40vh;
 }

@@ -1,3 +1,18 @@
+# Site
+Adapted from @binnyva's [Digital Garden](https://github.com/binnyva/gatsby-garden).
+
+Failed attempt at trying to update to MDX version 2 (in hindsight, all this for a remark-katex plugin???), breaks a lot of functionality and restoring them is not worth the limited time I have.
+I will probably branch out again with an older verison of MDX
+
+What I tried to implement:
+- Entire note preloading instead of excerpt only (MDX re-compiling from GraphQL queries fried my brain)
+- Code snippets support with Prism.js
+- Math support with gatsby-remark-katex
+- Footnotes and 
+
+Will probably
+
+
 # Gatsby Garden
 
 Gatsby Garden lets you **create a static HTML version of your markdown notes**. You can convert your Obsidian Zettelkasten Notes into a public Digital Garden.

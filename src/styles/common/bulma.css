@@ -1701,7 +1701,7 @@ a.tag:hover {
     overflow: auto;
     max-width: 100%; }
 
-.number {
+/* .number {
   align-items: center;
   background-color: var(--bg-sub);
   border-radius: 290486px;
@@ -1713,7 +1713,7 @@ a.tag:hover {
   min-width: 2.5em;
   padding: 0.25rem 0.5rem;
   text-align: center;
-  vertical-align: top; }
+  vertical-align: top; } */
 
 .input, .textarea, .select select {
   background-color: var(--bg-main);
@@ -2965,7 +2965,7 @@ a.navbar-item,
       width: 40%; }
     .column.is-three-fifths, .column.is-three-fifths-tablet {
       flex: none;
-      width: 60%; }
+      width: 90%; }
     .column.is-four-fifths, .column.is-four-fifths-tablet {
       flex: none;
       width: 80%; }

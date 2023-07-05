@@ -1,3 +1,4 @@
+const replaceFootnotes = require('./plugins/replace-footnotes')
 module.exports = {
   // Gatsby Config
   // pathPrefix: `/notes`, // If your Digital Garden is not published at the root of your website, use this. Use `npm run build -- --prefix-paths` when building.
@@ -27,12 +28,12 @@ module.exports = {
     //   ... Same structure as headerMenu. You can have any depth level - multiple menus can be nested.
     // ],
 
-    hoverPreview: true // If true, shows the content of an internal link in a tooltip when hovering over the link.
+    hoverPreview: true, // If true, shows the content of an internal link in a tooltip when hovering over the link.
   },
   plugins: [
     `gatsby-plugin-sharp`,
     `gatsby-remark-images`,
-    `gatsby-plugin-dark-mode`,
+    // `gatsby-plugin-dark-mode`,     "gatsby-plugin-dark-mode": "^1.5.2",
     // { // Enable this if you want to have an RSS Feed. The `siteMetadata.siteUrl` property should be present for this to work
     //   // Also, you'll need to install this library. To do that, run the command `npm install gatsby-plugin-feed-mdx --save` in the same directory as this gatsby-config.js file.
     //   resolve: `gatsby-plugin-feed`,
@@ -94,9 +95,72 @@ module.exports = {
     {
       resolve: `gatsby-plugin-mdx`,
       options: {
+        mdxOptions: {
+          remarkPlugins: [
+            require(`remark-gfm`),
+            [
+              require(`remark-wiki-link`),
+              { hrefTemplate: permalink => `/${permalink}` },
+            ],
+          ],
+        },
         extensions: [`.mdx`, `.md`],
         gatsbyRemarkPlugins: [
-          'gatsby-remark-mermaid',
+          //   {
+          //     resolve: `gatsby-remark-wiki-links`,
+          //     options: {
+          //       slugify: `${__dirname}/src/utils/make-slug.js`,
+          //       stripBrackets: true
+          //     }
+          //  },
+
+          `gatsby-remark-prismjs-title`,
+          // {
+          //   resolve: `gatsby-transformer-remark`,
+          //   options: {
+          //     // Footnotes mode (default: true)
+          //     footnotes: true,
+          //     // GitHub Flavored Markdown mode (default: true)
+          //     gfm: true,
+          //     plugins: []
+          //   },
+          // },
+          {
+            resolve: 'gatsby-remark-mermaid',
+            options: {
+              svgo: {
+                plugins: [{ name: 'removeTitle', active: false }],
+              },
+              mermaidOptions: {
+                theme: 'base',
+                useMaxWidth: false,
+                themeVariables: {
+                  'fontFamily': 'inherit',
+                },
+                sequence: {
+                  "actorFontFamily": "inherit",
+                  "noteFontFamily": "inherit",
+                  "messageFontFamily": "inherit",
+                  "fontFamily": 'inherit',
+                  "useMaxWidth": false,
+                },
+                journey: {
+                  "taskFontFamily": "inherit",
+                  "useMaxWidth": false,
+                  "fontFamily": 'inherit',
+                },
+                flowchart: {
+                  "useMaxWidth": false,
+                  "fontFamily": "inherit",
+                },
+                pie: {
+                  "useMaxWidth": true,
+                  "fontFamily": "inherit",
+                },
+                
+              },
+            },
+          },
           {
             resolve: `gatsby-remark-images`,
             options: {
@@ -104,11 +168,103 @@ module.exports = {
             },
           },
           {
-            resolve: 'gatsby-remark-obsidian',
+            resolve: `gatsby-remark-table-of-contents-patch`,
             options: {
-              titleToURL: require(`${__dirname}/src/utils/make-slug.js`)
-            }
-          }
+              exclude: 'Table of Contents',
+              tight: false,
+              ordered: false,
+              fromHeading: 1,
+              toHeading: 6,
+              className: 'table-of-contents',
+            },
+          },
+          `gatsby-remark-autolink-headers`,
+          `gatsby-remark-prismjs-copy-button`,
+          {
+            resolve: `gatsby-remark-prismjs`,
+            options: {
+              // Class prefix for <pre> tags containing syntax highlighting;
+              // defaults to 'language-' (e.g. <pre class="language-js">).
+              // If your site loads Prism into the browser at runtime,
+              // (e.g. for use with libraries like react-live),
+              // you may use this to prevent Prism from re-processing syntax.
+              // This is an uncommon use-case though;
+              // If you're unsure, it's best to use the default value.
+              classPrefix: 'language-',
+              // This is used to allow setting a language for inline code
+              // (i.e. single backticks) by creating a separator.
+              // This separator is a string and will do no white-space
+              // stripping.
+              // A suggested value for English speakers is the non-ascii
+              // character '›'.
+              inlineCodeMarker: null,
+              // This lets you set up language aliases.  For example,
+              // setting this to '{ sh: "bash" }' will let you use
+              // the language "sh" which will highlight using the
+              // bash highlighter.
+              aliases: {},
+              // This toggles the display of line numbers globally alongside the code.
+              // To use it, add the following line in gatsby-browser.js
+              // right after importing the prism color scheme:
+              //  require("prismjs/plugins/line-numbers/prism-line-numbers.css")
+              // Defaults to false.
+              // If you wish to only show line numbers on certain code blocks,
+              // leave false and use the {numberLines: true} syntax below
+              showLineNumbers: true,
+              // If setting this to true, the parser won't handle and highlight inline
+              // code used in markdown i.e. single backtick code like `this`.
+              noInlineHighlight: true,
+              // This adds a new language definition to Prism or extend an already
+              // existing language definition. More details on this option can be
+              // found under the header "Add new language definition or extend an
+              // existing language" below.
+              languageExtensions: [
+                {
+                  language: 'superscript',
+                  extend: 'javascript',
+                  definition: {
+                    superscript_types: /(SuperType)/,
+                  },
+                  insertBefore: {
+                    function: {
+                      superscript_keywords: /(superif|superelse)/,
+                    },
+                  },
+                },
+              ],
+              // Customize the prompt used in shell output
+              // Values below are default
+              prompt: {
+                user: 'root',
+                host: 'localhost',
+                global: false,
+              },
+              // By default the HTML entities <>&'" are escaped.
+              // Add additional HTML escapes by providing a mapping
+              // of HTML entities and their escape value IE: { '}': '&#123;' }
+              escapeEntities: {},
+            },
+          },
+          `gatsby-plugin-remark-footnotes`,
+
+          // {
+          //   resolve: require.resolve('./plugins/replace-code-blocks'),
+          //   options: {},
+          // },
+          //   options: {
+          //     titleToURL: require(`${__dirname}/src/utils/make-slug.js`)
+          //   }
+          // },
+          {
+            resolve: `gatsby-remark-katex`,
+            options: {
+              // Add any KaTeX options from https://github.com/KaTeX/KaTeX/blob/master/docs/options.md here
+              strict: `ignore`,
+            },
+          },
+          // {
+          //   resolve: 'gatsby-remark-obsidian',
+          // },
         ],
       },
     },
@@ -122,19 +278,41 @@ module.exports = {
     // },
 
     {
-      resolve: `gatsby-plugin-purgecss`,
+      resolve: `gatsby-omni-font-loader`,
       options: {
-        // printRejected: true, // Print removed selectors and processed file names. Use for debugging.
-        // develop: true, // Enable while using `gatsby develop`
-        // tailwind: true, // Enable tailwindcss support
-        ignore: ['tippy.js/', 'tooltip.css'], // Ignore files/folders
-        // purgeOnly : ['components/', '/main.css', 'bootstrap/'], // Purge only these files/folders
-        purgeCSSOptions: {
-          safelist: ['.tippy-box'], // Don't remove this selector
-        },
-        // More options defined here https://purgecss.com/configuration.html#options
+        enableListener: true,
+        preconnect: [`https://fonts.googleapis.com`, `https://fonts.gstatic.com`],
+        web: [
+          {
+            name: `Work Sans`,
+            file: `https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swa`,
+          },
+          {
+            name: `DM Mono`,
+            file: `https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,500;1,300;1,500&display=swap`
+          },
+          {
+            name: `IBM Plex Serif`,
+            file: `https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:ital@1&display=swap`
+
+          }
+        ],
       },
     },
+    // {
+    //   resolve: `gatsby-plugin-purgecss`,
+    //   options: {
+    //     // printRejected: true, // Print removed selectors and processed file names. Use for debugging.
+    //     // develop: true, // Enable while using `gatsby develop`
+    //     // tailwind: true, // Enable tailwindcss support
+    //     ignore: ['tippy.js/', 'tooltip.css'], // Ignore files/folders
+    //     // purgeOnly : ['components/', '/main.css', 'bootstrap/'], // Purge only these files/folders
+    //     purgeCSSOptions: {
+    //       safelist: ['.tippy-box'], // Don't remove this selector
+    //     },
+    //     // More options defined here https://purgecss.com/configuration.html#options
+    //   },
+    // },
 
     {
       resolve: 'gatsby-plugin-local-search',
@@ -150,8 +328,8 @@ module.exports = {
         // Provide options to the engine. This is optional and only recommended for advanced users.
         // Note: Only the flexsearch engine supports options.
         engineOptions: {
-            present: 'speed',
-            tokenize: 'forward'
+          present: 'speed',
+          tokenize: 'forward',
         },
 
         // GraphQL query used to fetch all data for the search index. This is required.
@@ -170,12 +348,34 @@ module.exports = {
                 frontmatter {
                   tags
                 }
-                rawBody
+                body
                 excerpt
               }
             }
           }
         `,
+
+        // query: `
+        //   {
+        //     allMdx(filter: {
+        //         fields: { visibility: { eq: "public" } }
+        //       }) {
+        //       nodes {
+        //         id
+        //         fields {
+        //           title
+        //           slug
+        //           excerpt
+        //         }
+        //         frontmatter {
+        //           tags
+        //         }
+        //         rawBody
+        //         excerpt
+        //       }
+        //     }
+        //   }
+        // `,
 
         // Field used as the reference value for each document. Default: 'id'.
         ref: 'id',
@@ -200,9 +400,17 @@ module.exports = {
             title: node.fields.title,
             excerpt: node.fields.excerpt ? node.fields.excerpt : node.excerpt,
             tags: node.frontmatter.tags,
-            body: node.rawBody,
+            body: node.body,
           })),
       },
     },
   ],
 }
+// data.allMdx.nodes.map(node => ({
+//   id: node.id,
+//   slug: node.fields.slug,
+//   title: node.fields.title,
+//   excerpt: node.fields.excerpt ? node.fields.excerpt : node.excerpt,
+//   tags: node.frontmatter.tags,
+//   body: node.rawBody,
+// })),

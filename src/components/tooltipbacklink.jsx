@@ -8,15 +8,15 @@ import '../styles/tooltip.css'
 import siteConfig from '../../gatsby-config'
 import MyMDX from './mymdx'
 
-export default function Tooltip({ children, content }) {
+export default function TooltipBacklink({ children, content }) {
   if (siteConfig.siteMetadata.hoverPreview) {
     // Show the preview only if enabled in the config - hoverPreview
     return (
       <Tippy
-        content = {content}
+        // content = { <MyMDX code={content} /> }
         interactive="true"
         allowHTML="true"
-        placement="bottom"
+        placement="bottom-start"
         delay="10"
 
       >

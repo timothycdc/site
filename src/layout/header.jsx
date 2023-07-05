@@ -57,13 +57,13 @@ export default function Header({ title, type, description }) {
 
         <title>{pageTitle}</title>
 
-        <link rel="apple-touch-icon" href="/img/favicon.png" />
-        <link
+        {/* <link rel="apple-touch-icon" href="/img/favicon.png" /> */}
+        {/* <link
           rel="icon"
           href="/img/favicon.png"
           type="image/png"
           sizes="16x16"
-        />
+        /> */}
         {/*
           These are included using gatsby-browser.js - if I include these like shown here, there is a horrible FOUC
         <link href="/css/style.css" rel="stylesheet" media="all" className="default" />

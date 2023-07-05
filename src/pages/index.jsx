@@ -33,6 +33,7 @@ export default function Home() {
               slug
               title
               date
+              excerpt
             }
             frontmatter {
               tags

@@ -25,9 +25,7 @@ export default function NoteList({ notes }) {
             </Link>
           </h4>
           <p className="note-excerpt">
-            {data.node.fields.excerpt
-              ? data.node.fields.excerpt
-              : data.node.excerpt}
+            {data.node.fields.excerpt? data.node.fields.excerpt : data.node.excerpt}
           </p>
 
           { data.node.frontmatter.tags?.length ? 

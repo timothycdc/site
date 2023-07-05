@@ -4,12 +4,30 @@ const makeSlug = require(`./src/utils/make-slug`)
 const _ = require(`lodash`)
 const { createFilePath } = require(`gatsby-source-filesystem`)
 const siteConfig = require(`./gatsby-config`)
+const { compileMDXWithCustomOptions } = require(`gatsby-plugin-mdx`)
+const readingTime = require('reading-time')
+// const remarkGfm = require('remark-gfm')
 
-exports.onCreateNode = ({ node, getNode, actions }) => {
+exports.onCreateNode = async ({
+  // trim down
+  node,
+  getNode,
+  getNodesByType,
+  pathPrefix,
+  reporter,
+  cache,
+  actions,
+  schema,
+  store,
+}) => {
   if (node.internal.type === `Mdx`) {
     const { createNodeField } = actions
 
-    const fileName = createFilePath({ node, getNode, basePath: `_notes` }).replace(/^\/(.+)\/$/, '$1')
+    const fileName = createFilePath({
+      node,
+      getNode,
+      basePath: `_notes`,
+    }).replace(/^\/(.+)\/$/, '$1')
     const title = node.frontmatter.title || fileName
     const slug = node.frontmatter.slug
       ? makeSlug(node.frontmatter.slug)
@@ -17,7 +35,44 @@ exports.onCreateNode = ({ node, getNode, actions }) => {
     const fileNode = getNode(node.parent)
     const date = node.frontmatter.date || fileNode.mtime
     const visibility = node.frontmatter.visibility || 'public'
-    const excerpt = node.frontmatter.excerpt || node.excerpt
+    let excerpt = ''
+
+    if (node.frontmatter.excerpt) {
+      excerpt = node.frontmatter.excerpt
+      if (excerpt.length > 140) {
+        // Truncate excerpt to 280 characters if it is longer than that.
+        excerpt = excerpt.substring(0, 140) + '...'
+      }
+    } else {
+      excerpt = node.excerpt // bug: for some reason, always ends up as null value
+    }
+
+    // const result = await compileMDXWithCustomOptions(
+    //   {
+    //     source: node.body,
+    //     absolutePath: node.internal.contentFilePath,
+    //   },
+    //   {
+    //     pluginOptions: {
+    //       plugins: [],
+    //     },
+    //     customOptions: {
+    //       mdxOptions: {
+    //         outputFormat: 'function-body',
+    //         jsxRuntime: 'automatic',
+    //         jsx: true,
+    //         useDynamicImport: true,
+    //         remarkPlugins: [remarkGfm],
+    //       },
+    //     },
+    //     getNode,
+    //     getNodesByType,
+    //     pathPrefix,
+    //     reporter,
+    //     cache,
+    //     store,
+    //   }
+    // )
 
     // If you are adding new fields here, add it to createSchemaCustomization() as well.
 
@@ -26,6 +81,11 @@ exports.onCreateNode = ({ node, getNode, actions }) => {
       name: `slug`,
       value: `/${slug}`,
     })
+    // createNodeField({
+    //   node,
+    //   name: `compiledHtml`,
+    //   value: JSON.stringify(result.processedMDX),
+    // })
     createNodeField({
       node,
       name: `fileName`,
@@ -51,6 +111,11 @@ exports.onCreateNode = ({ node, getNode, actions }) => {
       name: `visibility`,
       value: visibility,
     })
+    createNodeField({
+      node,
+      name: `timeToRead`,
+      value: readingTime(node.body)
+    })
 
     // :TODO: Add tags. Ideally, every supported frontmatter should be added as a field.
   }
@@ -64,21 +129,25 @@ exports.createPages = async ({ graphql, actions }) => {
       allMdx(filter: { fields: { visibility: { eq: "public" } } }) {
         edges {
           node {
+            excerpt
             fields {
               slug
               fileName
               title
               visibility
-              excerpt
             }
             frontmatter {
               tags
               title
               date
               aliases
+              excerpt
             }
-            excerpt
-            rawBody
+            internal {
+              contentFilePath
+            }
+            
+
             body
           }
         }
@@ -91,7 +160,7 @@ exports.createPages = async ({ graphql, actions }) => {
     }
   `)
   const allNotes = _.get(result, `data.allMdx.edges`)
-  
+
   // Make a map of how notes link to other links. This is necessary to have back links and graph visualisation
   let refersTo = {} // refersTo['note title'] = ['note that "note title" linked to', 'another note that "note title" linked to', ...]
   let referredBy = {} // referredBy['note title'] = [{title: 'note that linked to "note title"' ...}, {title: 'another note that linked to "note title"', ...}, ...]
@@ -102,22 +171,26 @@ exports.createPages = async ({ graphql, actions }) => {
   let allNotesByTitle = {}
 
   // I didn't used the much more cleaner foreach because the `refersTo` was not working well with that.
+
   for (let i = 0; i < result.data.allMdx.edges.length; i++) {
     const node = result.data.allMdx.edges[i].node
 
     const title = node.fields.title
     const slug = node.fields.slug
-    const excerpt = node.fields.excerpt || node.excerpt
+    // pay close attention
+    const excerpt = node.frontmatter.excerpt || node.fields.excerpt || node.excerpt
 
     allNotesByTitle[title] = node
 
     // Go thru all the notes, create a map of how references map.
 
-    const outgoingLinks = findReferences(node.rawBody) // All outgoing links from this note
+    // const outgoingLinks = findReferences(node.rawBody) // All outgoing links from this note
+    const outgoingLinks = findReferences(node.body) // All outgoing links from this note
     refersTo[title] = outgoingLinks.map(outTitle =>
       getPreExistingTitle(outTitle, allNoteTitles)
     )
 
+    const tooltipTemplate = path.resolve(`./src/templates/tooltip.jsx`)
     for (let j = 0; j < outgoingLinks.length; j++) {
       const tle = outgoingLinks[j]
       const linkTitle = getPreExistingTitle(tle, allNoteTitles)
@@ -131,14 +204,18 @@ exports.createPages = async ({ graphql, actions }) => {
         title: title,
         excerpt: excerpt,
         slug: slug,
-        body: node.body
+        // body: node.body,
+        contentFilePath: node.internal.contentFilePath,
+        compiledHtml: node.fields.compiledHtml,
+        date: node.fields.date,
       })
 
       linkageCache[title + '->' + linkTitle] = true
     }
   }
-
+  const postTemplate = path.resolve(`./src/templates/note.jsx`)
   // Create pages for all notes.
+  // console.log('[DEBUG] allNotes.length', allNotes.length)
   for (let i = 0; i < result.data.allMdx.edges.length; i++) {
     const node = result.data.allMdx.edges[i].node
     const title = node.fields.title || node.frontmatter.title
@@ -147,38 +224,44 @@ exports.createPages = async ({ graphql, actions }) => {
     // Add all notes linked to and from this note together.
     let linkedNoteTitles = []
     let linkedNotes = {}
-    if(refersTo[title]) linkedNoteTitles = refersTo[title]
-    if(referredBy[title]) linkedNoteTitles = linkedNoteTitles.concat(referredBy[title].map(note => note.title))
+    if (refersTo[title]) linkedNoteTitles = refersTo[title]
+    if (referredBy[title])
+      linkedNoteTitles = linkedNoteTitles.concat(
+        referredBy[title].map(note => note.title)
+      )
 
-    for(let j = 0; j < linkedNoteTitles.length; j++) {
+    // console.log('[DEBUG] linkedNoteTitles.length', linkedNoteTitles.length)
+    for (let j = 0; j < linkedNoteTitles.length; j++) {
       let linkTitle = linkedNoteTitles[j]
 
-      if(allNotesByTitle[linkTitle] === undefined ) continue
+      if (allNotesByTitle[linkTitle] === undefined) continue
 
       // This reduces the page context size. Use only things used in note.jsx. Otherwise I would have just set it as `node`.
       // Only the linked(from and to the current note) needs to be in this.
       linkedNotes[linkTitle.toLowerCase()] = {
-        title: allNotesByTitle[linkTitle].title, 
-        slug: allNotesByTitle[linkTitle].fields.slug, 
-        body: allNotesByTitle[linkTitle].body 
+        title: allNotesByTitle[linkTitle].title,
+        slug: allNotesByTitle[linkTitle].fields.slug,
+        body: allNotesByTitle[linkTitle].body,
+        excerpt: allNotesByTitle[linkTitle].frontmatter.excerpt || allNotesByTitle[linkTitle].fields.excerpt || allNotesByTitle[linkTitle].excerpt,
       }
     }
 
-    // Context is becaming too big. I'm getting this warnding...
+    // Context is becaming too big. I'm getting this warning...
     //      `The size of at least one page context chunk exceeded 500kb, which could lead to degraded performance. Consider putting less data in the page context.`
     createPage({
       path: node.fields.slug,
-      component: path.resolve(`./src/templates/note.jsx`),
+      component: `${postTemplate}?__contentFilePath=${node.internal.contentFilePath}`,
       context: {
         title: title,
         slug: node.fields.slug,
         refersTo: refersTo[title] || [],
         referredBy: referredBy[title] || [],
-        linkedNotes: linkedNotes
+        linkedNotes: linkedNotes,
       },
     })
 
     // Handling Aliases
+    // console.log('[DEBUG] aliases.length', aliases.length)
     for (let j = 0; j < aliases.length; j++) {
       createRedirect({
         fromPath: `/${makeSlug(aliases[j])}`,
@@ -188,7 +271,8 @@ exports.createPages = async ({ graphql, actions }) => {
       })
     }
 
-    if(node.fields.slug != '/' + makeSlug(node.fields.fileName)) { // If there is a custom slug, setup a redirect.
+    if (node.fields.slug != '/' + makeSlug(node.fields.fileName)) {
+      // If there is a custom slug, setup a redirect.
       createRedirect({
         fromPath: `/${makeSlug(node.fields.fileName)}`,
         toPath: node.fields.slug,
@@ -204,7 +288,7 @@ exports.createPages = async ({ graphql, actions }) => {
     context: {
       allRefersTo: refersTo,
       allReferredBy: referredBy,
-      allNotes: allNotes
+      allNotes: allNotes,
     },
   })
 
@@ -258,14 +342,40 @@ exports.createPages = async ({ graphql, actions }) => {
               title
               date
               aliases
+              excerpt
             }
             excerpt
-            rawBody
+            body
           }
         }
       }
     }
   `)
+
+  //   query {
+  //     allMdx(filter: { fields: { visibility: { eq: "unlisted" } } }) {
+  //       edges {
+  //         node {
+  //           fields {
+  //             slug
+  //             title
+  //             visibility
+  //             excerpt
+  //           }
+  //           frontmatter {
+  //             tags
+  //             title
+  //             date
+  //             aliases
+  //           }
+  //           excerpt
+  //           rawBody
+  //         }
+  //       }
+  //     }
+  //   }
+  //
+  // console.log("[DEBUG] privateNotes.data.allMdx.edges.length" , privateNotes.data.allMdx.edges.length)
   for (let i = 0; i < privateNotes.data.allMdx.edges.length; i++) {
     const node = privateNotes.data.allMdx.edges[i].node
     const title = node.fields.title ? node.fields.title : node.frontmatter.title
@@ -278,8 +388,9 @@ exports.createPages = async ({ graphql, actions }) => {
         slug: node.fields.slug,
         refersTo: refersTo[title] || [],
         referredBy: referredBy[title] || [],
-        linkedNotes: []
+        linkedNotes: [],
       },
+
     })
   }
 }
@@ -293,6 +404,7 @@ exports.createSchemaCustomization = ({ actions }) => {
     type Mdx implements Node @infer {
       frontmatter: Frontmatter
       fields: Fields
+      excerpt: String
     }
 
     """
@@ -304,6 +416,7 @@ exports.createSchemaCustomization = ({ actions }) => {
       slug: String
       visibility: String
       excerpt: String
+      compiledHtml: String
     }
 
     """
@@ -338,7 +451,7 @@ function findReferences(content) {
   // :TODO: Send a bit of text around the link back as well. Can be used in back links for context.
   // :TODO: This will break if custom slug is used.
   // :TODO: Handle # in the link - eg [[Note Title#section-3]]
-
+  // console.log('[DEBUG] matchedNotes', matchedNotes)
   return matchedNotes
 }
 
