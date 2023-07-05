@@ -19,13 +19,13 @@ What I tried to implement:
   - Graph links still somewhat break so I added a hacky fix as a fallback (generate slug again from title). Obviously will not work for custom slugs. Gatsby's page context is a bit irritating
   - MermaidJS graphs display more nicely in general (reduced buggy padding for journeys and other diagrams)
 - Todo:
-  - [] Change fonts plugin import
-  - [] A way to display more helpful extracts for backlinks instead of just the page excerpt
-  - [] Theme-ui
-  - [] Better prism.js highlighting
-  - [] Use more dedicated plugins for toc, embeds, metadata
-  - [] Opengraph support
-  - [] Update links styling
+  - [ ] Change fonts plugin import
+  - [ ] A way to display more helpful extracts for backlinks instead of just the page excerpt
+  - [ ] Theme-ui
+  - [ ] Better prism.js highlighting
+  - [ ] Use more dedicated plugins for toc, embeds, metadata
+  - [ ] Opengraph support
+  - [ ] Update links styling
 
 
 To run whatever I have, just clone, `npm install` and `gastby develop`. Not guaranteed to work as this is still in progress.
@@ -43,7 +43,7 @@ To see an example site built using Gatsby Garden, visit my [Digital Garden](http
 
 ## Features
 
-- Support for wiki links - \[\[Note Name\]\]
+- Support for wiki links - \[\[ Note Name \]\]
 - Graph visualization of linkages between notes
 - Backlinks at the bottom of the note
 - Tagging supported
