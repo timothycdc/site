@@ -8,9 +8,9 @@ What I tried to implement:
 - Entire note preloading instead of excerpt only (MDX re-compiling from GraphQL queries fried my brain)
 - Code snippets support with Prism.js
 - Math support with gatsby-remark-katex
-- Footnotes and 
+- Footnotes and the like
 
-Will probably
+Will probably revisit this soon
 
 
 # Gatsby Garden
