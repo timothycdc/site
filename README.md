@@ -1,14 +1,36 @@
 # Site
 Adapted from @binnyva's [Digital Garden](https://github.com/binnyva/gatsby-garden).
 
-Failed attempt at trying to update to MDX version 2 (in hindsight, all this for a remark-katex plugin???), breaks a lot of functionality and restoring them is not worth the limited time I have.
-I will probably branch out again with an older verison of MDX
+My shaky attempt at adding features I need and trying to update to MDX version 2 (in hindsight, all this for a remark-katex plugin???), updating up one version of React and several other remark packages.
+
+Some features will have died along the way – such as the dark mode theme toggler. Images also don't import from the `_notes` folder, so just use static for now.
 
 What I tried to implement:
-- Entire note preloading instead of excerpt only (MDX re-compiling from GraphQL queries fried my brain)
-- Code snippets support with Prism.js
-- Math support with gatsby-remark-katex
-- Footnotes and the like
+- Entire note preloading (all components and rich content) instead of text-excerpt only. MDX re-compiling from GraphQL queries fried my brain, async is a pain, will probably be not feasible
+- Code snippets support with Prism.js. Copy button still needed
+- Math support with katex
+- Footnotes, Table of Contents
+- General style overhaul
+- Overhauled graph library to react-force-graph, feels snappier and animates more nicely with more options for styling  
+- Frontmatter supports custom excerpts, which is nice so TOC doesn't get in the way.
+- Fixes:
+  - Tippy.JS annoying arrow is removed
+  - Fixed anchor links redirecting to index page accidentally
+  - Graph links still somewhat break so I added a hacky fix as a fallback (generate slug again from title). Obviously will not work for custom slugs. Gatsby's page context is a bit irritating
+  - MermaidJS graphs display more nicely in general (reduced buggy padding for journeys and other diagrams)
+- Todo:
+  - [] Change fonts plugin import
+  - [] A way to display more helpful extracts for backlinks instead of just the page excerpt
+  - [] Theme-ui
+  - [] Better prism.js highlighting
+  - [] Use more dedicated plugins for toc, embeds, metadata
+  - [] Opengraph support
+  - [] Update links styling
+
+
+To run whatever I have, just clone, `npm install` and `gastby develop`. Not guaranteed to work as this is still in progress.
+
+
 
 Will probably revisit this soon
 
