@@ -1,4 +1,7 @@
-const replaceFootnotes = require('./plugins/replace-footnotes')
+// const replaceFootnotes = require('./plugins/replace-footnotes')
+const {
+  rehypeMetaAsAttributes,
+} = require(`./src/utils/plugin`);
 module.exports = {
   // Gatsby Config
   // pathPrefix: `/notes`, // If your Digital Garden is not published at the root of your website, use this. Use `npm run build -- --prefix-paths` when building.
@@ -31,6 +34,7 @@ module.exports = {
     hoverPreview: true, // If true, shows the content of an internal link in a tooltip when hovering over the link.
   },
   plugins: [
+    `gatsby-plugin-theme-ui`,
     `gatsby-plugin-sharp`,
     `gatsby-remark-images`,
     // `gatsby-plugin-dark-mode`,     "gatsby-plugin-dark-mode": "^1.5.2",
@@ -103,6 +107,7 @@ module.exports = {
               { hrefTemplate: permalink => `/${permalink}` },
             ],
           ],
+          rehypePlugins: [rehypeMetaAsAttributes],
         },
         extensions: [`.mdx`, `.md`],
         gatsbyRemarkPlugins: [
@@ -114,7 +119,7 @@ module.exports = {
           //     }
           //  },
 
-          `gatsby-remark-prismjs-title`,
+          // `gatsby-remark-prismjs-title`,
           // {
           //   resolve: `gatsby-transformer-remark`,
           //   options: {
@@ -167,84 +172,84 @@ module.exports = {
               maxWidth: 1200,
             },
           },
-          {
-            resolve: `gatsby-remark-table-of-contents-patch`,
-            options: {
-              exclude: 'Table of Contents',
-              tight: false,
-              ordered: false,
-              fromHeading: 1,
-              toHeading: 6,
-              className: 'table-of-contents',
-            },
-          },
+          // {
+          //   resolve: `gatsby-remark-table-of-contents-patch`,
+          //   options: {
+          //     exclude: 'Table of Contents',
+          //     tight: false,
+          //     ordered: false,
+          //     fromHeading: 1,
+          //     toHeading: 6,
+          //     className: 'table-of-contents',
+          //   },
+          // },
           `gatsby-remark-autolink-headers`,
-          `gatsby-remark-prismjs-copy-button`,
-          {
-            resolve: `gatsby-remark-prismjs`,
-            options: {
-              // Class prefix for <pre> tags containing syntax highlighting;
-              // defaults to 'language-' (e.g. <pre class="language-js">).
-              // If your site loads Prism into the browser at runtime,
-              // (e.g. for use with libraries like react-live),
-              // you may use this to prevent Prism from re-processing syntax.
-              // This is an uncommon use-case though;
-              // If you're unsure, it's best to use the default value.
-              classPrefix: 'language-',
-              // This is used to allow setting a language for inline code
-              // (i.e. single backticks) by creating a separator.
-              // This separator is a string and will do no white-space
-              // stripping.
-              // A suggested value for English speakers is the non-ascii
-              // character '›'.
-              inlineCodeMarker: null,
-              // This lets you set up language aliases.  For example,
-              // setting this to '{ sh: "bash" }' will let you use
-              // the language "sh" which will highlight using the
-              // bash highlighter.
-              aliases: {},
-              // This toggles the display of line numbers globally alongside the code.
-              // To use it, add the following line in gatsby-browser.js
-              // right after importing the prism color scheme:
-              //  require("prismjs/plugins/line-numbers/prism-line-numbers.css")
-              // Defaults to false.
-              // If you wish to only show line numbers on certain code blocks,
-              // leave false and use the {numberLines: true} syntax below
-              showLineNumbers: true,
-              // If setting this to true, the parser won't handle and highlight inline
-              // code used in markdown i.e. single backtick code like `this`.
-              noInlineHighlight: true,
-              // This adds a new language definition to Prism or extend an already
-              // existing language definition. More details on this option can be
-              // found under the header "Add new language definition or extend an
-              // existing language" below.
-              languageExtensions: [
-                {
-                  language: 'superscript',
-                  extend: 'javascript',
-                  definition: {
-                    superscript_types: /(SuperType)/,
-                  },
-                  insertBefore: {
-                    function: {
-                      superscript_keywords: /(superif|superelse)/,
-                    },
-                  },
-                },
-              ],
-              // Customize the prompt used in shell output
-              // Values below are default
-              prompt: {
-                user: 'root',
-                host: 'localhost',
-                global: false,
-              },
-              // By default the HTML entities <>&'" are escaped.
-              // Add additional HTML escapes by providing a mapping
-              // of HTML entities and their escape value IE: { '}': '&#123;' }
-              escapeEntities: {},
-            },
-          },
+          // `gatsby-remark-prismjs-copy-button`,
+          // {
+          //   resolve: `gatsby-remark-prismjs`,
+          //   options: {
+          //     // Class prefix for <pre> tags containing syntax highlighting;
+          //     // defaults to 'language-' (e.g. <pre class="language-js">).
+          //     // If your site loads Prism into the browser at runtime,
+          //     // (e.g. for use with libraries like react-live),
+          //     // you may use this to prevent Prism from re-processing syntax.
+          //     // This is an uncommon use-case though;
+          //     // If you're unsure, it's best to use the default value.
+          //     classPrefix: 'language-',
+          //     // This is used to allow setting a language for inline code
+          //     // (i.e. single backticks) by creating a separator.
+          //     // This separator is a string and will do no white-space
+          //     // stripping.
+          //     // A suggested value for English speakers is the non-ascii
+          //     // character '›'.
+          //     inlineCodeMarker: null,
+          //     // This lets you set up language aliases.  For example,
+          //     // setting this to '{ sh: "bash" }' will let you use
+          //     // the language "sh" which will highlight using the
+          //     // bash highlighter.
+          //     aliases: {},
+          //     // This toggles the display of line numbers globally alongside the code.
+          //     // To use it, add the following line in gatsby-browser.js
+          //     // right after importing the prism color scheme:
+          //     //  require("prismjs/plugins/line-numbers/prism-line-numbers.css")
+          //     // Defaults to false.
+          //     // If you wish to only show line numbers on certain code blocks,
+          //     // leave false and use the {numberLines: true} syntax below
+          //     showLineNumbers: true,
+          //     // If setting this to true, the parser won't handle and highlight inline
+          //     // code used in markdown i.e. single backtick code like `this`.
+          //     noInlineHighlight: true,
+          //     // This adds a new language definition to Prism or extend an already
+          //     // existing language definition. More details on this option can be
+          //     // found under the header "Add new language definition or extend an
+          //     // existing language" below.
+          //     languageExtensions: [
+          //       {
+          //         language: 'superscript',
+          //         extend: 'javascript',
+          //         definition: {
+          //           superscript_types: /(SuperType)/,
+          //         },
+          //         insertBefore: {
+          //           function: {
+          //             superscript_keywords: /(superif|superelse)/,
+          //           },
+          //         },
+          //       },
+          //     ],
+          //     // Customize the prompt used in shell output
+          //     // Values below are default
+          //     prompt: {
+          //       user: 'root',
+          //       host: 'localhost',
+          //       global: false,
+          //     },
+          //     // By default the HTML entities <>&'" are escaped.
+          //     // Add additional HTML escapes by providing a mapping
+          //     // of HTML entities and their escape value IE: { '}': '&#123;' }
+          //     escapeEntities: {},
+          //   },
+          // },
           `gatsby-plugin-remark-footnotes`,
 
           // {
@@ -269,13 +274,6 @@ module.exports = {
       },
     },
 
-    // {
-    //   resolve: `gatsby-plugin-google-fonts`,
-    //   options: {
-    //     fonts: [`IBM Plex Sans:ital,wght@0,400;0,600;1,400;1,600`],
-    //     display: `swap`,
-    //   },
-    // },
 
     {
       resolve: `gatsby-omni-font-loader`,
@@ -284,8 +282,8 @@ module.exports = {
         preconnect: [`https://fonts.googleapis.com`, `https://fonts.gstatic.com`],
         web: [
           {
-            name: `Work Sans`,
-            file: `https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swa`,
+            name: `Inter`,
+            file: `https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap`,
           },
           {
             name: `DM Mono`,

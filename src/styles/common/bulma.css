@@ -238,8 +238,10 @@ button,
 input,
 select,
 textarea {
-  font-family: "IBM Plex Sans", BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif; }
-
+  /* font-family: "IBM Plex Sans", BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;  */
+  font-family: "Inter", sans-serif;
+}
+  
 code,
 pre {
   -moz-osx-font-smoothing: auto;
@@ -664,13 +666,16 @@ a.has-text-danger:hover, a.has-text-danger:focus {
   font-weight: 700 !important; }
 
 .is-family-primary {
-  font-family: "IBM Plex Sans", BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif !important; }
+    /* font-family: "IBM Plex Sans", BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;  */
+    font-family: "Inter", sans-serif;}
 
 .is-family-secondary {
-  font-family: "IBM Plex Sans", BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif !important; }
+   /* font-family: "IBM Plex Sans", BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;  */
+   font-family: "Inter", sans-serif;}
 
 .is-family-sans-serif {
-  font-family: "IBM Plex Sans", BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif !important; }
+    /* font-family: "IBM Plex Sans", BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;  */
+    font-family: "Inter", sans-serif;}
 
 .is-family-monospace {
   font-family: monospace !important; }
@@ -1468,7 +1473,7 @@ a.box-feed:active {
   overflow-y: hidden;
   max-width: 100%; }
 
-.tags {
+/* .tags {
   align-items: center;
   display: flex;
   flex-wrap: wrap;
@@ -1610,7 +1615,7 @@ a.box-feed:active {
     .tag:not(body).is-delete:active {
       background-color: #e6e6e6; }
   .tag:not(body).is-rounded {
-    border-radius: 290486px; }
+    border-radius: 290486px; } */
 
 a.tag:hover {
   text-decoration: underline; }
@@ -3862,12 +3867,12 @@ a.navbar-item,
 .search-suggestions.content li + li {
   margin-top: 0.5em; }
 
-.tags.are-medium .tag:not(body) {
+/* .tags.are-medium .tag:not(body) {
   padding: 8px 16px;
-  height: 2rem; }
+  height: 2rem; } */
 
-.tags.are-medium.are-white .tag:not(body) {
-  background: var(--bg-sub); }
+/* .tags.are-medium.are-white .tag:not(body) {
+  background: var(--bg-sub); } */
 
 .section.is-note .column.is-primary-content,
 .note-page-section {
@@ -3898,7 +3903,7 @@ a.navbar-item,
     position: absolute;
     left: 0.7rem; } }
 
-.tag:not(body) {
+/* .tag:not(body) {
   padding-left: 1em;
   padding-right: 1em; }
 
@@ -3912,7 +3917,7 @@ a.tag:hover {
   color: var(--link); }
 
 .tags.are-medium .tag:not(.is-normal):not(.is-large) {
-  font-size: 0.8rem; }
+  font-size: 0.8rem; } */
 
   .block-title {
     font-size: 0.8rem;

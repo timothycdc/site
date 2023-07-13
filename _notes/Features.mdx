@@ -12,26 +12,11 @@ excerpt:  "A digital garden is an online space at the intersection of a notebook
 Features of Garden Garden...
 [[Zettelkasten]]
 ### MDX
-<div style={{ padding: '20px', backgroundColor: 'tomato' }}>
+<div style={{ padding: '20px', backgroundColor: '#A0C0DD' }}>
   <h3>This is JSX</h3>
 </div>
-### Mermaid Based Graphs
 
 
-```mermaid
-flowchart TD
-    A[Christmas] -->|Get money| B(Go shopping)
-    B --> C{Let me think}
-    C -->|One| D[Laptop]
-    C -->|Two| E[iPhone]
-    C -->|Three| F[fa:fa-car Car]
-  
-```
-
-| Syntax      | Description |
-| ----------- | ----------- |
-| Header      | Title       |
-| Paragraph   | Text        |
 
 
 ## Tasklist
@@ -89,7 +74,7 @@ And...
 
 You can put `code` in Markddown...
 
-```c:title=example-file.c
+```c
 #include <stdio.h>
 
 void main() {
@@ -97,9 +82,12 @@ void main() {
 }
 ```
 
+
+
+
 #### Bash Time
 
-```bash{promptUser:user,promptHost:host}
+```bash
 #!/bin/bash
 
 # Define source and destination directories. I increase the length of this lineeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
@@ -138,36 +126,90 @@ echo "Done copying files."
 
 This script copies only files, skipping over directories and other types of items. It's always a good idea to check the behavior of a script like this before running it on important data, to avoid unexpected results.
 
-# Diff Code Blocks
-```diff-javascript
--   function hello(name) {
--      console.log("Hello, " + name + "!");
--    }
-+    hello = name => {
-+      console.log(`Hello, ${name}!`);
-+    }
+
+
+<Aside>I chose this video to test my theme. I did this to myself</Aside>
+<Aside>PS: I think this song slaps.</Aside>
+
+ ```jsx numberLines hl=1-3,5 title=src/components/CodeBlock.jsx
+ import React from 'react'
+ import Highlight, { defaultProps } from 'prism-react-renderer'
+
+ export default ({ children, className }) => {
+   const language = className.replace(/language-/, '') || ""
+   return (
+     <Highlight {...defaultProps}
+       code={children}
+       language={language}
+     >
+       {({ className, style, tokens, getLineProps, getTokenProps }) => (
+         <pre className={className} style={{ ...style }}>
+           {tokens.map((line, index) => {
+             const lineProps = getLineProps({ line, key: index })
+             return (
+               <div key={index} {...lineProps}>
+                 {line.map((token, key) => (
+                   <span key={key}{...getTokenProps({ token, key })} />
+                 ))}
+               </div>
+             )
+           }
+           )}
+         </pre>
+       )}
+     </Highlight>
+   )
+ }
+ ```
+
+## More testing
+```jsx
+const IndexPage = (props) => {
+  const allBuildTimeJasons = props.data.JasonAPI.allJasons;
+  const { loading, data: apolloData } = useQuery(APOLLO_QUERY);
+  const allClientTimeJasons = apolloData.allJasons;
+  return (
+    <div>
+      <h1>Look at all these Jasons!</h1>
+      {loading ? (
+        <JasonList grayOutWaveCount jasons={allBuildTimeJasons} />
+      ) : (
+        <JasonList jasons={allClientTimeJasons} />
+      )}
+    </div>
+  );
+};
 ```
-# Prompt for Bash
-```shell{promptUser: alice}{promptHost: dev.localhost}
-echo "Hello, world!"
-for i in {1..10};
-do
-  echo $i
-done
+
+Or a single line?
+
+```bash
+npm i -D eslint prettier eslint-plugin-prettier eslint-config-prettier
+```
+
+Would you prefer it if the copy button wasn't there? Can do!
+
+```bash noCopy
+npm i eslint
+```
+
+### Line highlighting? Got it!
+
+Line 4 is **lit**.
+Gettit?
+
+```js hl=4
+const getShouldHighlightLine = (hl) => {
+  if (hl) {
+    const lineNumbers = rangeParser(hl);
+    return (index) => lineNumbers.includes(index + 1);
+  }
+  return () => false;
+};
 ```
 
 
-# Prompt for Bash \#2
-```shell{outputLines: 2, 4-8}{promptUser: chris}{promptHost: dev.remotehost}
-pwd
-/usr/home/chris/bin
-ls -la
-total 2
-drwxr-xr-x   2 chris  chris     11 Jan 10 16:48 .
-drwxr--r-x  45 chris  chris     92 Feb 14 11:10 ..
--rwxr-xr-x   1 chris  chris    444 Aug 25  2013 backup
--rwxr-xr-x   1 chris  chris    642 Jan 17 14:42 deploy
-```
+
 
 
 

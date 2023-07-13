@@ -1,14 +1,20 @@
-import React from 'react'
+/** @jsx jsx */
+import { Box, jsx } from "theme-ui";
+import React from "react";
+
+
 import { graphql, Link, navigate } from 'gatsby'
 import { MDXProvider } from '@mdx-js/react'
+import MdxComponents from '../mdx-components'
 import LinkGraph from '../components/linkgraph'
+import { TableOfContentsList } from '../components/toc'
 // import Graph from 'react-graph-vis'
 // import rehypeKatex from 'rehype-katex'
 // import remarkMath from 'remark-math'
 import Tooltip from '../components/tooltip'
 // import TooltipBacklink from '../components/tooltipbacklink'
 import Layout from '../layout/layout'
-import '../styles/note.css'
+// import '../styles/note.css'
 import '../styles/graph.css'
 // import MyMDX from '../components/mymdx'
 // import { compileSync } from '@mdx-js/mdx'
@@ -27,10 +33,9 @@ const nodeExists = title => {
   return titles.includes(title)
 }
 
-
-
-export default function Note({ pageContext, data, children }) {
+export default function Note({ pageContext, data, children, ...props}) {
   const post = data.mdx
+  console.log('post', post)
 
   // Create the data for the graph visualisation for the note linking.
   const graph = {
@@ -50,7 +55,6 @@ export default function Note({ pageContext, data, children }) {
 
     focusedNodeId: post.fields.title,
   }
-
 
   // Links to the current Note
   for (let i = 0; i < pageContext.referredBy.length; i++) {
@@ -102,7 +106,6 @@ export default function Note({ pageContext, data, children }) {
     }
   }
 
-
   const TooltipLink = props => {
     let title = null
     if (props.children) {
@@ -110,52 +113,55 @@ export default function Note({ pageContext, data, children }) {
     }
     let linkedNoteLink = pageContext.linkedNotes[title] || null
 
-
-    if (props.href){
-    if (props.href.includes('http')) {
-      return <a {...props} />
-    } else if (props.href.includes('mailto')) {
-      return <a {...props} />
-    } else if (props.href.includes('#')) {
-      return <a {...props} />
-    } else if (!pageContext.linkedNotes || typeof props.children !== 'string') {
-      return <a {...props} />
-    } else if (linkedNoteLink) {
-      // console.log('linkedNoteLink!!!', linkedNoteLink)
+    if (props.href) {
+      if (props.href.includes('http')) {
+        return <a {...props} />
+      } else if (props.href.includes('mailto')) {
+        return <a {...props} />
+      } else if (props.href.includes('#')) {
+        return <a {...props} />
+      } else if (
+        !pageContext.linkedNotes ||
+        typeof props.children !== 'string'
+      ) {
+        return <a {...props} />
+      } else if (linkedNoteLink) {
+        // console.log('linkedNoteLink!!!', linkedNoteLink)
+        return (
+          <>
+            <Tooltip content={linkedNoteLink.excerpt.toString()}>
+              <Link {...props} to={`${props.href}`} title="" />
+            </Tooltip>
+          </>
+        )
+      }
       return (
         <>
           <Tooltip content={linkedNoteLink.excerpt.toString()}>
-            <Link {...props} to={`${props.href}`} title="" />
+            <Link {...props} to={`/${props.href}`} title="" />
           </Tooltip>
         </>
       )
-    }
-    return (
-      <>
-        <Tooltip content={linkedNoteLink.excerpt.toString()}>
+    } else if (props.content) {
+      return (
+        <Tooltip content={props.content}>
           <Link {...props} to={`/${props.href}`} title="" />
         </Tooltip>
-      </>
-    )}
-    else if (props.content){ 
-      return(
-      <Tooltip content={props.content}>
-      <Link {...props} to={`/${props.href}`} title="" />
-    </Tooltip>)
-
+      )
     }
     return <a {...props} />
   }
 
-  const MyCode = props => (
-    <code style={{ fontFamily: `monospace`, fontWeight: 500 }} {...props} />
-  )
+  // const MyCode = props => (
+  //   <code style={{ fontFamily: `monospace`, fontWeight: 500 }} {...props} />
+  // )
 
   return (
-    <Layout title={post.fields.title} type="note">
-      <div className="column is-three-fifths">
+    <React.Fragment>
+    <Layout title={post.fields.title} type="note" {...props} >
+      <div className="wrapper" >
         <main>
-          <div className="note-area note-page-section">
+          <Box sx={{m:8}} className="note-area">
             <div className="buttons for-back-home">
               <Link className="button is-text button__page-back" to="/">
                 <span className="icon is-small">
@@ -177,14 +183,16 @@ export default function Note({ pageContext, data, children }) {
               </Link>
             </div>
 
-            <h1 className="note-title">{post.fields.title}</h1>
-            <div className="note-content">
-              {/* <MDXRenderer>{post.body}</MDXRenderer> */}
-              {/* <MDXProvider components={{ }}>
-                <MDXRenderer>{post.body}</MDXRenderer>
-              </MDXProvider> */}
+            <div className="top-box" sx={{ mt: 10 }}>
+              <h1 className="note-title">{post.fields.title}</h1>
+              <div>
+                <h2>ToC is set to {post.fields.showToc ? 'True' : 'False'} </h2>
+                <TableOfContentsList tableOfContents={post.tableOfContents} />
+              </div>
+            </div>
 
-              <MDXProvider components={{ code: MyCode, a: TooltipLink }}>
+            <div className="note-content">
+              <MDXProvider components={{ ...MdxComponents, a: TooltipLink }}>
                 {children}
               </MDXProvider>
             </div>
@@ -198,10 +206,13 @@ export default function Note({ pageContext, data, children }) {
                     {pageContext.referredBy.map((note, index) => (
                       <div key={index} className="related-group block-box">
                         {/* <TooltipBacklink content={note.compiledCode}> */}
-                        <TooltipLink content={note.excerpt} title = {note.title} date = {note.date}>
+                        <TooltipLink
+                          content={note.excerpt}
+                          title={note.title}
+                          date={note.date}
+                        >
                           <Link to={`${note.slug}`}>
                             <h4 className="related-title">{note.title}</h4>
-
                           </Link>
                           {/* </TooltipBacklink> */}
                         </TooltipLink>
@@ -247,16 +258,13 @@ export default function Note({ pageContext, data, children }) {
             </div>
 
             <div className="note-graph">
-
-
-              <LinkGraph graphData = {d3GraphData}/>
-
-            
+              <LinkGraph graphData={d3GraphData} />
             </div>
-          </div>
+          </Box>
         </main>
       </div>
     </Layout>
+    </React.Fragment>
   )
 }
 
@@ -315,7 +323,9 @@ export const query = graphql`
         date
         compiledHtml
         slug
+        showToc
       }
+      tableOfContents
       frontmatter {
         tags
         source

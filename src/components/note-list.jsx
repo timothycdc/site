@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link, navigate } from 'gatsby'
-import '../styles/note.css'
+// import '../styles/note.css'
 const moment = require('moment')
 
 export default function NoteList({ notes }) {

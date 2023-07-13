@@ -35,8 +35,9 @@ exports.onCreateNode = async ({
     const fileNode = getNode(node.parent)
     const date = node.frontmatter.date || fileNode.mtime
     const visibility = node.frontmatter.visibility || 'public'
+    const showToc = node.frontmatter.showToc || true;
+    
     let excerpt = ''
-
     if (node.frontmatter.excerpt) {
       excerpt = node.frontmatter.excerpt
       if (excerpt.length > 140) {
@@ -47,32 +48,6 @@ exports.onCreateNode = async ({
       excerpt = node.excerpt // bug: for some reason, always ends up as null value
     }
 
-    // const result = await compileMDXWithCustomOptions(
-    //   {
-    //     source: node.body,
-    //     absolutePath: node.internal.contentFilePath,
-    //   },
-    //   {
-    //     pluginOptions: {
-    //       plugins: [],
-    //     },
-    //     customOptions: {
-    //       mdxOptions: {
-    //         outputFormat: 'function-body',
-    //         jsxRuntime: 'automatic',
-    //         jsx: true,
-    //         useDynamicImport: true,
-    //         remarkPlugins: [remarkGfm],
-    //       },
-    //     },
-    //     getNode,
-    //     getNodesByType,
-    //     pathPrefix,
-    //     reporter,
-    //     cache,
-    //     store,
-    //   }
-    // )
 
     // If you are adding new fields here, add it to createSchemaCustomization() as well.
 
@@ -116,6 +91,11 @@ exports.onCreateNode = async ({
       name: `timeToRead`,
       value: readingTime(node.body)
     })
+    createNodeField({
+      node,
+      name: `showToc`,
+      value: showToc
+    })
 
     // :TODO: Add tags. Ideally, every supported frontmatter should be added as a field.
   }
@@ -142,6 +122,7 @@ exports.createPages = async ({ graphql, actions }) => {
               date
               aliases
               excerpt
+              showToc
             }
             internal {
               contentFilePath
@@ -343,6 +324,7 @@ exports.createPages = async ({ graphql, actions }) => {
               date
               aliases
               excerpt
+              showToc
             }
             excerpt
             body
@@ -432,6 +414,7 @@ exports.createSchemaCustomization = ({ actions }) => {
       source: String
       visibility: String
       excerpt: String
+      showToc: Boolean
     }
   `
   createTypes(typeDefs)

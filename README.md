@@ -17,15 +17,17 @@ What I tried to implement:
   - Tippy.JS annoying arrow is removed
   - Fixed anchor links redirecting to index page accidentally
   - Graph links still somewhat break so I added a hacky fix as a fallback (generate slug again from title). Obviously will not work for custom slugs. Gatsby's page context is a bit irritating
-  - MermaidJS graphs display more nicely in general (reduced buggy padding for journeys and other diagrams)
+  - Fixed Mermaid graphs padding
+     - Mermaid is generally very buggy so I'm removing this as a feature before going on to anything else
+
 - Todo:
-  - [ ] Change fonts plugin import
-  - [ ] A way to display more helpful extracts for backlinks instead of just the page excerpt
-  - [ ] Theme-ui
-  - [ ] Better prism.js highlighting
-  - [ ] Use more dedicated plugins for toc, embeds, metadata
+  - [x] Change fonts plugin import
+  - [x] Better prism.js highlighting
+  - [ ] Theme-ui (in progress)
+  - [ ] Use more dedicated components for toc, embeds, metadata outside MDX (in progress)
   - [ ] Opengraph support
   - [ ] Update links styling
+  - [ ] A way to display more helpful extracts for backlinks instead of just the page excerpt (postponed)
 
 
 To run whatever I have, just clone, `npm install` and `gastby develop`. Not guaranteed to work as this is still in progress.

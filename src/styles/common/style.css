@@ -1,3 +1,5 @@
+
+
 @import "highlight.css";
 /* Containers: Body, Container, Box, Main, Header, Content */ 
 
@@ -217,7 +219,11 @@ h6 {
 
 h1, h2, h3, h4, h5, h6 {
     margin: 0;
-    font-family: 'IBM Plex Sans', sans-serif;
+    font-family: Inter, sans-serif;
+}
+
+body{
+    font-family: "Inter", sans-serif;
 }
 
 p a,
@@ -936,7 +942,7 @@ hr {
     float: left; 
 }
 
-.tag {
+/* .tag {
     color: var(--text-main);
     background: var(--bg-sub);
     text-decoration: none;
@@ -948,7 +954,7 @@ hr {
     font-family:  var(--primary-font-family);
     font-weight: normal !important;
     font-size: 13px;
-}
+} */
 
 .content {
   

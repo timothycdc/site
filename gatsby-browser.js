@@ -4,15 +4,32 @@
 //   }
 // }
 
-import './src/styles/common/bulma.css'
-import './src/styles/common/style.css'
-import './src/styles/common/custom.css'
-import './src/styles/common/util.css'
+
+
+// import './src/styles/common/bulma.css'
+// import './src/styles/common/style.css'
+// import './src/styles/common/custom.css'
+// import './src/styles/common/util.css'
 
 import 'katex/dist/katex.min.css';
 import("tippy.js/dist/tippy.css");
 import ('tippy.js/animations/scale.css');
 
-import('prismjs/themes/prism.css');
-import("prismjs/plugins/line-numbers/prism-line-numbers.css");
-import("prismjs/plugins/command-line/prism-command-line.css");
+// import('prismjs/themes/prism.css');
+// import("prismjs/plugins/line-numbers/prism-line-numbers.css");
+// import("prismjs/plugins/command-line/prism-command-line.css");
+
+
+// SMOOTH SCROLLING FOR LINK ANCHORS
+export const onRouteUpdate = () => {
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+  
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+          behavior: 'smooth'
+        });
+      });
+    });
+  };
+  

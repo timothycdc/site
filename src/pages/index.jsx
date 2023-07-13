@@ -1,3 +1,5 @@
+/** @jsx jsx */
+import { jsx } from 'theme-ui'
 import React from 'react'
 import { graphql, useStaticQuery, Link } from 'gatsby'
 import { MDXRenderer } from 'gatsby-plugin-mdx'
@@ -5,7 +7,9 @@ import Layout from '../layout/layout'
 import siteConfig from '../../gatsby-config'
 import NoteList from '../components/note-list'
 import Search from '../components/search'
-import '../styles/index.css'
+
+import theme from '../gatsby-plugin-theme-ui'
+// import '../styles/index.css'
 import { DefaultMenuStructure, MenuRoot } from '../utils/menu-structure'
 
 export default function Home() {
@@ -53,6 +57,7 @@ export default function Home() {
   })
 
   return data.homeNote ? (
+    <>
     <Layout title={data.homeNote.fields.title} type="home">
       <div className="column is-half">
         <div className="note-area">
@@ -63,7 +68,9 @@ export default function Home() {
         </div>
       </div>
     </Layout>
+    </>
   ) : (
+    <>
     <Layout title="Home" type="home">
       <div className="column is-half">
         <div className="block">
@@ -87,5 +94,6 @@ export default function Home() {
         <Link to="/sitemap">All Notes...</Link>
       </div>
     </Layout>
+    </>
   )
 }

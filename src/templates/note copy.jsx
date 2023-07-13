@@ -299,7 +299,7 @@ export default function Note({ pageContext, data, children }) {
     <Layout title={post.fields.title} type="note">
       <div className="column is-three-fifths">
         <main>
-          <div className="note-area note-page-section">
+          <div className="note-area">
             <div className="buttons for-back-home">
               <Link className="button is-text button__page-back" to="/">
                 <span className="icon is-small">

@@ -13,7 +13,6 @@ import {
   MenuItemExternalLink,
 } from '../utils/menu-structure'
 
-import DarkMode from '../components/dark-mode'
 
 export default function Header({ title, type, description }) {
   const menu = DefaultMenuStructure('header')
@@ -56,21 +55,6 @@ export default function Header({ title, type, description }) {
         )}
 
         <title>{pageTitle}</title>
-
-        {/* <link rel="apple-touch-icon" href="/img/favicon.png" /> */}
-        {/* <link
-          rel="icon"
-          href="/img/favicon.png"
-          type="image/png"
-          sizes="16x16"
-        /> */}
-        {/*
-          These are included using gatsby-browser.js - if I include these like shown here, there is a horrible FOUC
-        <link href="/css/style.css" rel="stylesheet" media="all" className="default" />
-        <link href="/css/main.css" rel="stylesheet" media="all" className="default" />
-        <link href="/css/custom.css" rel="stylesheet" media="all" className="default" />
-        <link href="/css/Util.css" rel="stylesheet" media="all" className="default" />
-        */}
       </Helmet>
 
       <nav
@@ -96,9 +80,7 @@ export default function Header({ title, type, description }) {
             </svg>
             <h4>{siteConfig.siteMetadata.title || 'Gatsby Garden'}</h4>
           </Link>
-          <div className="navbar-item navbar-dark-mode__mobile is-hidden-tablet">
-            <DarkMode />
-          </div>
+
           <button
             className="navbar-burger button-link"
             aria-label="menu"
@@ -151,9 +133,7 @@ export default function Header({ title, type, description }) {
             <div className="navbar-item">
               <Search size="small" showExcerpt={false} />
             </div>
-            <div className="navbar-item">
-              <DarkMode />
-            </div>
+
           </div>
         </div>
       </nav>
