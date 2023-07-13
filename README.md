@@ -3,7 +3,7 @@ Adapted from @binnyva's [Digital Garden](https://github.com/binnyva/gatsby-garde
 
 My shaky attempt at adding features I need and trying to update to MDX version 2 (in hindsight, all this for a remark-katex plugin???), updating up one version of React and several other remark packages.
 
-Some features will have died along the way – such as the dark mode theme toggler. Images also don't import from the `_notes` folder, so just use static for now.
+Some features will have died along the way – such as the dark mode theme toggler. Images also don't import from the `_notes` folder, so I'm using the static folder for now.
 
 What I tried to implement:
 - Entire note preloading (all components and rich content) instead of text-excerpt only. MDX re-compiling from GraphQL queries fried my brain, async is a pain, will probably be not feasible
@@ -19,6 +19,7 @@ What I tried to implement:
   - Graph links still somewhat break so I added a hacky fix as a fallback (generate slug again from title). Obviously will not work for custom slugs. Gatsby's page context is a bit irritating
   - Fixed Mermaid graphs padding
      - Mermaid is generally very buggy so I'm removing this as a feature before going on to anything else
+  - gatsby-remark-obsidian breaks entire build process with new remark update (took hours of debugging to find out this was the offending plugin), replaced with gatsby-remark-wiki-link plugin
 
 - Todo:
   - [x] Change fonts plugin import
@@ -34,7 +35,12 @@ To run whatever I have, just clone, `npm install` and `gastby develop`. Not guar
 
 
 
-Will probably revisit this soon
+Will probably revisit this soon.
+
+> Reminder:
+  The code I write here is meant for personal use and not a reflection of what I'd be proud to present elsewhere without a lot of cleaning up and modularisation. This is mostly a learning process on learning   how to use GatsbyJS (which is slowly getting outdated [unfortunately](https://survey.stackoverflow.co/2023/#section-admired-and-desired-web-frameworks-and-technologies))
+
+
 
 
 # Gatsby Garden
