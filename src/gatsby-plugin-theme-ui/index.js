@@ -8,9 +8,7 @@ const theme = {
   mediumGap: 10,
   largeGap: 20,
   extraLargeGap: 40,
-  breakpoints: [
-    '40em', '@media (min-width: 56em) and (orientation: landscape)', '64em',
-  ],
+  breakpoints: [40, 52, 64].map((n) => n + 'em'),
   Layout: {
     backgroundColor: `background`,
     color: `text`,

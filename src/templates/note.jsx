@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import { Box, jsx } from "theme-ui";
+import { Divider, Box, jsx } from "theme-ui";
 import React from "react";
 
 
@@ -55,6 +55,8 @@ export default function Note({ pageContext, data, children, ...props}) {
 
     focusedNodeId: post.fields.title,
   }
+
+  console.log({children})
 
   // Links to the current Note
   for (let i = 0; i < pageContext.referredBy.length; i++) {
@@ -156,10 +158,56 @@ export default function Note({ pageContext, data, children, ...props}) {
   //   <code style={{ fontFamily: `monospace`, fontWeight: 500 }} {...props} />
   // )
 
+
+  // weird hack for the footnotes legacy plugin to modify the 
+  // footnotes section title within the MDXProvider
+  const H2 = ({ id, children }) => {
+    if (id === 'footnote-label') {
+      // return <Divider  sx = {{mt:9, mb:9}}/>
+      return  <React.Fragment>
+      <style>
+        {`
+        #uniqueHr::before, #uniqueHr::after {
+          content: "";
+          display: block;
+          height: 1px;
+          width: 1.3em;
+          position: absolute;
+          top: calc(50% - 0.05em);
+          background-color: #333;
+          transform-origin: center;
+          transform: rotate(-65deg);
+        }
+  
+        #uniqueHr::before {
+          left: calc(50% - 1rem - 0.1rem/2);  // decrease the gap size
+        }
+  
+        #uniqueHr::after {
+          right: calc(50% - 1rem - 0.1rem/2);  // decrease the gap size
+        }
+        `}
+      </style>
+      <hr
+        id="uniqueHr"
+        style={{
+          border: 0,
+          height: '0.1em',
+          backgroundImage: 'linear-gradient(to right, #333, #333 47%, rgba(0,0,0,0) 47%, rgba(0,0,0,0) 53%, #333 53%, #333)',
+          position: 'relative',
+          margin: '4em 2em',
+          overflow: 'visible'  // to not cut-off the slashes
+        }}
+      />
+    </React.Fragment>
+    }
+    return <h2 id={id}>{children}</h2>
+  };
+
   return (
     <React.Fragment>
     <Layout title={post.fields.title} type="note" {...props} >
-      <div className="wrapper" >
+      <div>
         <main>
           <Box sx={{m:8}} className="note-area">
             <div className="buttons for-back-home">
@@ -192,7 +240,7 @@ export default function Note({ pageContext, data, children, ...props}) {
             </div>
 
             <div className="note-content">
-              <MDXProvider components={{ ...MdxComponents, a: TooltipLink }}>
+              <MDXProvider components={{ ...MdxComponents, a: TooltipLink, h2 : H2 }}>
                 {children}
               </MDXProvider>
             </div>

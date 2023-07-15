@@ -57,7 +57,7 @@ export default function Header({ title, type, description }) {
         <title>{pageTitle}</title>
       </Helmet>
 
-      <nav
+      {/* <nav
         className="navbar is-transparent"
         role="navigation"
         aria-label="main navigation"
@@ -136,7 +136,7 @@ export default function Header({ title, type, description }) {
 
           </div>
         </div>
-      </nav>
+      </nav> */}
     </>
   )
 }
