@@ -1,0 +1,108 @@
+/* Circle + Arrow container */
+
+.circle-arrow-container {
+    display: flex;
+    align-items: center;
+    transition: transform 0.2s ease;
+}
+
+
+.arrow-icon {
+    font-size: 50px;
+    margin-left: 5px;
+    line-height: 1;
+    transition: transform 0.3s ease;
+}
+
+.circle-arrow-container:hover .arrow-icon {
+    transform: translateX(5px);
+    /* Moves the arrow 10 pixels to the right */
+}
+
+.circle-arrow-container:hover {
+    transform: scale(1.02);
+    /* Increases the size of the circle by 10% */
+}
+
+.circle-arrow-container:hover .rotate-textcircle {
+animation-play-state: paused;
+}
+
+
+
+/* White Circle */
+
+.white-circle {
+    width: 160px;
+    height: 160px;
+    background-color: white;
+    position: relative;
+    border-radius: 50%;
+    border: 1px solid black;
+}
+
+/* Centered Image */
+
+.centered-image {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 50px;
+    height: 50px;
+}
+
+.centered-image img {
+    width: 100%;
+    height: auto;
+}
+
+/* Rotating Badge */
+
+.rotating-badge {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.rotating-badge .rotate-textcircle {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.rotating-badge .rotate-textcircle{
+    animation: 40s textRotate infinite linear;
+    animation-play-state: running;
+}
+
+
+
+
+.rotating-badge .rotate-textcircle .rotate-scroll-text {
+    font-size: 50px;
+    /* Adjust based on your needs */
+    letter-spacing: 2px;
+    /* Adjust based on your needs */
+    fill: black;
+    font-weight: 500;
+    pointer-events: none;
+    opacity: 1;
+
+}    
+
+@keyframes textRotate {
+    from {
+        transform: rotate(0deg);
+    }    
+
+    to {
+        transform: rotate(360deg);
+    }    
+}    
+
+

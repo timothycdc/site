@@ -13,7 +13,6 @@ import {
   MenuItemExternalLink,
 } from '../utils/menu-structure'
 
-
 export default function Header({ title, type, description }) {
   const menu = DefaultMenuStructure('header')
   const pageTitle =
@@ -37,12 +36,12 @@ export default function Header({ title, type, description }) {
       <Helmet>
         <meta content="width=device-width, initial-scale=1" name="viewport" />
         <meta content={siteConfig.siteMetadata.title} property="og:site_name" />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        {/* <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
         <link
           href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,400;0,600;1,400;1,600&amp;display=swap"
           rel="stylesheet"
-        />
+        /> */}
         <meta content={title ? title : pageTitle} property="og:title" />
         {description ? (
           <meta content={description} property="og:description" />

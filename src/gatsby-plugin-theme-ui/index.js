@@ -8,11 +8,11 @@ const theme = {
   mediumGap: 10,
   largeGap: 20,
   extraLargeGap: 40,
-  breakpoints: [40, 52, 64].map((n) => n + 'em'),
+  breakpoints: [40, 52, 64].map(n => n + 'em'),
   Layout: {
     backgroundColor: `background`,
     color: `text`,
-    fontFamily: `sans`, // from tailwind styles
+    fontFamily: `Inter`, // from tailwind styles
     fontSize: 1,
     lineHeight: `text`,
   },
@@ -23,7 +23,23 @@ const theme = {
     mutedBackground: `#f6f6f6`,
     primary: `#343743`,
     mutedPrimary: `#A0C0DD`,
+    borderPrimary: `#71788C`,
   },
+  fonts: {
+    body: `Inter, sans-serif`,
+    heading: `Inter, sans-serif`,
+    special: `Libre Baskerville, serif`,
+  },
+
+  textStyles: {
+    special: {
+      fontFamily: 'special',
+      fontStyle: 'italic',
+      fontWeight: 300,
+      letterSpacing: '-0.01em',
+    },
+  },
+
   sizes: {
     lineLength: `70ch`,
   },
@@ -69,9 +85,9 @@ const theme = {
       width: `90vw`,
     },
     Note: {
-      "note-area": {
-        margin: "10px",
-      }
+      'note-area': {
+        margin: '10px',
+      },
     },
     CodeBlock: {
       ...nightOwlLight,

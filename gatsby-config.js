@@ -1,15 +1,13 @@
 // const replaceFootnotes = require('./plugins/replace-footnotes')
-const {
-  rehypeMetaAsAttributes,
-} = require(`./src/utils/plugin`);
+const { rehypeMetaAsAttributes } = require(`./src/utils/plugin`)
 module.exports = {
   // Gatsby Config
   // pathPrefix: `/notes`, // If your Digital Garden is not published at the root of your website, use this. Use `npm run build -- --prefix-paths` when building.
   trailingSlash: 'never', // Remove all trailing slashes on each URL, e.g. /x/ to /x
 
   siteMetadata: {
-    title: `Gatsby Garden`,
-    description: `A Digital Garden tended by Gatsby`,
+    title: `Timo's Website`,
+    description: `A digital garden portfolio`,
 
     // siteUrl: `https://yoursite.com/notes/`, // URL at which your site will be published. This should be present if you want RSS feed.
     // headerMenu: [ // Top Navbar items
@@ -140,29 +138,28 @@ module.exports = {
                 theme: 'base',
                 useMaxWidth: false,
                 themeVariables: {
-                  'fontFamily': 'inherit',
+                  fontFamily: 'inherit',
                 },
                 sequence: {
-                  "actorFontFamily": "inherit",
-                  "noteFontFamily": "inherit",
-                  "messageFontFamily": "inherit",
-                  "fontFamily": 'inherit',
-                  "useMaxWidth": false,
+                  actorFontFamily: 'inherit',
+                  noteFontFamily: 'inherit',
+                  messageFontFamily: 'inherit',
+                  fontFamily: 'inherit',
+                  useMaxWidth: false,
                 },
                 journey: {
-                  "taskFontFamily": "inherit",
-                  "useMaxWidth": false,
-                  "fontFamily": 'inherit',
+                  taskFontFamily: 'inherit',
+                  useMaxWidth: false,
+                  fontFamily: 'inherit',
                 },
                 flowchart: {
-                  "useMaxWidth": false,
-                  "fontFamily": "inherit",
+                  useMaxWidth: false,
+                  fontFamily: 'inherit',
                 },
                 pie: {
-                  "useMaxWidth": true,
-                  "fontFamily": "inherit",
+                  useMaxWidth: true,
+                  fontFamily: 'inherit',
                 },
-                
               },
             },
           },
@@ -274,26 +271,28 @@ module.exports = {
       },
     },
 
-
     {
       resolve: `gatsby-omni-font-loader`,
       options: {
         enableListener: true,
-        preconnect: [`https://fonts.googleapis.com`, `https://fonts.gstatic.com`],
+        preconnect: [
+          `https://fonts.googleapis.com`,
+          `https://fonts.gstatic.com`,
+        ],
         web: [
           {
             name: `Inter`,
-            file: `https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap`,
+            file: `https://fonts.googleapis.com/css?family=Inter:400,500,600,700&text=%09%20$%25%27()+,-.0123456789:;?@ABCDEFGHIKLMNOPRSTUVWXYZabcdefghijklmnopqrstuvwxyz%E2%80%93%E2%80%94%E2%80%99%E2%80%9C%E2%80%9D%E2%86%92`,
+            // specify custom glyphs for inter arrows https://github.com/google/fonts/issues/2382
           },
           {
             name: `DM Mono`,
-            file: `https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,500;1,300;1,500&display=swap`
+            file: `https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,500;1,300;1,500&display=swap`,
           },
           {
-            name: `IBM Plex Serif`,
-            file: `https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:ital@1&display=swap`
-
-          }
+            name: `Libre Baskerville`,
+            file: `https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital@1&display=swap`,
+          },
         ],
       },
     },
