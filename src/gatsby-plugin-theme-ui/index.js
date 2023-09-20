@@ -35,7 +35,7 @@ const theme = {
     special: {
       fontFamily: 'special',
       fontStyle: 'italic',
-      fontWeight: 300,
+      fontWeight: 400,
       letterSpacing: '-0.01em',
     },
   },
@@ -185,6 +185,13 @@ const theme = {
       },
       '&.anchor.before': {
         borderBottomWidth: `0px !important`,
+      },
+      '&.basic': {
+        borderBottom: `none`,
+        color: `text`,
+        ':hover': {
+          color: `inherit`,
+        },
       },
     },
 

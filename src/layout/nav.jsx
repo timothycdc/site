@@ -4,7 +4,7 @@ import { Box, jsx, Link } from 'theme-ui'
 
 export default function Nav({ children, title = 'Home', type, ...props }) {
   return (
-    <Box sx={{ mr: 8, position: 'sticky', top: 9 }}>
+    <Box sx={{ mr: 8, position: 'sticky', top: 8 }}>
       {/* <Header title={title} type={type} /> */}
 
       <Box

@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import React from 'react'
-import { Box, jsx } from 'theme-ui'
-import Thing from './thing'
+import { Box, Link, jsx } from 'theme-ui'
+import Thing from './style-components/thing'
 import '../thing.css'
 import '../rotatebadge.css'
 
@@ -30,7 +30,7 @@ export default function Section({
       {/* Inner-section 1: Title */}
       <Box
         sx={{
-          paddingTop: '20px',
+          paddingTop: 6,
           borderTop: '1px solid',
           borderColor: `borderPrimary`,
         }}
@@ -39,8 +39,9 @@ export default function Section({
           sx={{
             color: 'primary',
             variant: 'textStyles.special',
-            m: 3,
+            mt: 1,
             p: 0,
+            // mb: 10, // RESPONSIVE CHANGE
           }}
         >
           {title}
@@ -60,13 +61,17 @@ export default function Section({
 
       {showRotateBadge ? (
         <Box
+          className="basic"
           sx={{
             display: 'flex',
             justifyContent: 'flex-end',
             mb: 8,
           }}
         >
-          <div className="circle-arrow-container">
+          <Link
+            className="circle-arrow-container basic"
+            sx={{ cursor: 'pointer' }}
+          >
             <div className="white-circle">
               <div className="centered-image">
                 <img src="/img/writing.png" alt="Writing" />
@@ -88,7 +93,7 @@ export default function Section({
               </div>
             </div>
             <div className="arrow-icon">→</div>
-          </div>
+          </Link>
         </Box>
       ) : null}
 

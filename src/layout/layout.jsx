@@ -16,7 +16,7 @@ export default function Layout({ children, title, type, ...props }) {
       >
         <Box
           sx={{
-            mt: 9,
+            mt: 8,
             mb: 8,
             ml: 'auto',
             mr: 'auto',
