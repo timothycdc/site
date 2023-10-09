@@ -3,7 +3,7 @@ import React, { useRef } from 'react'
 import { Box, jsx, Text } from 'theme-ui'
 import gsap from 'gsap'
 
-export const MoreItem = ({ item }) => {
+export const ExpandItem = ({ item }) => {
   const [isExpanded, setExpanded] = React.useState(false)
   const contentRef = useRef(null)
   const buttonTextRef = useRef(null)

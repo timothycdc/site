@@ -1,0 +1,55 @@
+{
+"infoItems": [
+    {
+      "title": "Quantitative Finance",
+      "tags": "reinforcement learning, monte carlo, black-scholes, heston models",
+      "paragraph": "I enjoy solving complex problems, fuelled by passion in the fields of mathematics, statistics, and machine learning. My current readings are on Monte Carlo methods in computational finance, alongside other stochastic forms of computation. I am also working on projects combining deep reinforcement learning for trading. Also interested in the space of fusing the gap between large language models and financial markets, allowing for augmented ways to qualitatively process language data as signals for trading." 
+    },
+    {
+      "title": "Machine Learning",
+      "tags": "data science and statistics stuff from countless competitions",
+      "paragraph": "I specialise in using (lots of) data to derive insights and fix things, sparked by lot of experiences from data science hackathons, personal readings, projects, and from modules taught at Imperial. I also have experience in building LLM tools and appreciate their vast potential for future real-world applications."
+    },
+    {
+      "title": "Software Engineering",
+      "tags": "javascript web fun, functional programming, low-level languages",
+      "paragraph": "As a part of my degree I have refined many practices underpinning this. I possess practical experience in various frontend/backend tools, and other coding frameworks for engineering and data science. Also learning more on functional programming, and low-level languages."
+    }
+  ],
+
+  "writingItems": [
+    { "date": "23-3-2023", "title": "Title name 1" },
+    { "date": "24-3-2023", "title": "Title name 2" }
+  ],
+  "showcaseItems": [
+    {
+      "date": "2023-09-20",
+      "title": "ICU Malaysian Society Website",
+      "description": "A static site blog with CMS configured for The Other Side of The Story (TOSS), a non-profit NGO raising awareness about matters relating to mental health in the youth. Powered by Hugo and Netlify.",
+      "paragraph": "This is a sample paragraph for ICU Malaysian Society Website."
+    },
+    {
+      "date": "2023-08-15",
+      "title": "TOSS",
+      "description": "A static site blog with CMS configured for The Other Side of The Story (TOSS), a non-profit NGO raising awareness about matters relating to mental health in the youth. Powered by Hugo and Netlify.",
+      "paragraph": "This is a sample paragraph for TOSS."
+    }
+  ],
+  "moreItems": [
+    {
+      "title": "Design & UX/UI",
+      "tags": "minimalism, typography, visual design",
+      "paragraph": "I have been designing and creating web interfaces for many years and appreciate the intricacies captured in code – ranging from lots of JS libraries in three.js, GSAP, P5.js, and have been far down the rabbit hole of artistic web development."
+    },
+    {
+      "title": "Software Engineering",
+      "tags": "javascript web fun, functional programming, low-level languages",
+      "paragraph": "I like complex topics revolving around problem solving, fuelled by passion in the fields of mathematics, statistics, and machine learning. Such problems call their home in the field of quantitative finance, where I’m currently working on projects in the field."
+    },
+    {
+      "title": "Machine Learning",
+      "tags": "reinforcement learning, monte carlo, black-scholes, heston models",
+      "paragraph": "I like complex topics revolving around problem solving, fuelled by passion in the fields of mathematics, statistics, and machine learning. Such problems call their home in the field of quantitative finance, where I’m currently working on projects in the field."
+    }
+  ]
+}

@@ -1,8 +1,10 @@
 /** @jsx jsx */
 import { Box, jsx } from 'theme-ui'
 import Section from './section'
+import { ExpandItem } from './expanditem'
+import data from '../../data/paragraphs.json'
 
-export const InfoSection = () => {
+export const InfoSection = ({ infoItems }) => {
   return (
     <Section title="..info" id="info">
       <Box
@@ -14,20 +16,21 @@ export const InfoSection = () => {
           fontSize: 1,
         }}
       >
-        <div>
-          I’m studying Electronic and Information Engineering at Imperial
-          College. Interested in quant finance, software, tech,
-          entrepreneurship, and machine learning. My modules specialise in
-          applied mathematics, machine learning, plus topics in electrical
-          engineering and computer science.
-        </div>
-        <div>
-          I focus on a multidisciplinary approach, rapidly building up
-          understanding in varied fields of knowledge to combine their
-          applications advantageously, while maintaining high level to detail.
-          On this page I write about my interests, log progress, share
-          experiments, and try to keep everything accessible in one place.
-        </div>
+        <div>{data.info[0]}</div>
+        <div>{data.info[1]}</div>
+      </Box>
+
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          borderBottom: '1px solid #71788C',
+          mt: '10px',
+        }}
+      >
+        {infoItems.map((infoItem, index) => (
+          <ExpandItem key={index} item={infoItem} />
+        ))}
       </Box>
     </Section>
   )

@@ -31,7 +31,7 @@ export default function Section({
           p: 0,
           fontSize: 5,
           px: 6,
-          // background: 'primary',
+
           mx: -1,
           // mb: 10, // RESPONSIVE CHANGE
         }}
@@ -76,21 +76,21 @@ export default function Section({
         width: '100%',
         pb: 8,
         borderBottom: bottomBorder ? '1px solid' : '0px solid',
-        borderColor: `borderPrimary`,
+        borderColor: `primary`,
       }}
       id={id ? id : null}
     >
       <Box
         sx={{
-          height: '2px',
+          height: '3px',
         }}
       ></Box>
       {/* Inner-section 1: Title */}
       <Box
         sx={{
           // paddingTop: 5,
-          borderTop: '1px solid',
-          borderColor: `borderPrimary`,
+          borderTop: '5px solid',
+          borderColor: `primary`,
         }}
       >
         <FillingMarquee />
