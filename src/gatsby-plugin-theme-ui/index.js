@@ -28,7 +28,39 @@ const theme = {
   fonts: {
     body: `Inter, sans-serif`,
     heading: `Inter, sans-serif`,
-    special: `Libre Baskerville, serif`,
+    special: `Instrument Serif, serif`,
+  },
+
+  linkStyles: {
+    animated: {
+      position: 'relative',
+      display: 'inline-block',
+      fontWeight: 600,
+      textDecoration: 'none',
+      borderBottom: 'none',
+      lineHeight: '1.5em',
+      color: 'inherit',
+      transition: 'all 0.3s ease-in-out',
+      px: 4,
+      py: 1,
+      ':hover': {
+        color: 'white',
+      },
+      '::after': {
+        content: '""',
+        position: 'absolute',
+        left: 0,
+        bottom: 0,
+        height: '100%',
+        width: '0%',
+        backgroundColor: '#343743',
+        transition: 'all 0.3s ease-in-out',
+        zIndex: '-1',
+      },
+      ':hover::after': {
+        width: '100%',
+      },
+    },
   },
 
   textStyles: {
@@ -36,7 +68,7 @@ const theme = {
       fontFamily: 'special',
       fontStyle: 'italic',
       fontWeight: 400,
-      letterSpacing: '-0.01em',
+      letterSpacing: '0.01em',
     },
   },
 
@@ -169,31 +201,31 @@ const theme = {
       padding: 1,
       borderRadius: `10`,
     },
-    a: {
-      color: `mutedText`,
-      borderBottomWidth: `2px`,
-      borderBottomStyle: `solid`,
-      borderBottomColor: `mutedPrimary`,
-      textDecoration: `none`,
-      transition: `all 0.1s ease-in-out`,
-      ':hover': {
-        textDecoration: `none`,
-        color: `mutedPrimary`,
-        borderBottomWidth: `2px`,
-        borderBottomStyle: `solid`,
-        borderBottomColor: `primary`,
-      },
-      '&.anchor.before': {
-        borderBottomWidth: `0px !important`,
-      },
-      '&.basic': {
-        borderBottom: `none`,
-        color: `text`,
-        ':hover': {
-          color: `inherit`,
-        },
-      },
-    },
+    // a: {
+    //   color: `mutedText`,
+    //   borderBottomWidth: `2px`,
+    //   borderBottomStyle: `solid`,
+    //   borderBottomColor: `mutedPrimary`,
+    //   textDecoration: `none`,
+    //   transition: `all 0.1s ease-in-out`,
+    //   ':hover': {
+    //     textDecoration: `none`,
+    //     color: `mutedPrimary`,
+    //     borderBottomWidth: `2px`,
+    //     borderBottomStyle: `solid`,
+    //     borderBottomColor: `primary`,
+    //   },
+    //   '&.anchor.before': {
+    //     borderBottomWidth: `0px !important`,
+    //   },
+    //   '&.basic': {
+    //     borderBottom: `none`,
+    //     color: `text`,
+    //     ':hover': {
+    //       color: `inherit`,
+    //     },
+    //   },
+    // },
 
     'note-content': {
       fontSize: 2,

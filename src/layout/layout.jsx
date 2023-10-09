@@ -3,11 +3,13 @@ import React from 'react'
 import { Box, jsx } from 'theme-ui'
 import Header from './header'
 import Nav from './nav'
+import CustomCursor from '../components/customcursor'
 
 export default function Layout({ children, title, type, ...props }) {
   return (
     <>
       <Header title={title} type={type} />
+      <CustomCursor />
       <Box
         sx={{
           mr: [6, 8, 8],

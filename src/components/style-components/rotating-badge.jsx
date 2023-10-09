@@ -1,9 +1,8 @@
 /** @jsx jsx */
 import React from 'react'
 import { Box, Link, jsx } from 'theme-ui'
-import Thing from './style-components/thing'
-import '../thing.css'
-import '../rotatebadge.css'
+import '../../thing.css'
+import '../../rotatebadge.css'
 
 export default function rotatingBadge({}) {
   return (

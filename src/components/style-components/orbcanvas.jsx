@@ -118,21 +118,41 @@ class Orb {
     )
   }
 
-  setBounds() {
-    // how far from the { x, y } origin can each orb move
-    const maxDist =
-      //   window.innerWidth < 200 ? window.innerWidth / 3 : window.innerWidth / 5
-      window.innerWidth < 200 ? window.innerWidth / 2 : window.innerWidth / 3
-    // the { x, y } origin for each orb (the bottom right of the screen)
-    // const originX = window.innerWidth / 1.25;
-    // const originY =
-    //   window.innerWidth < 1000
-    //     ? window.innerHeight
-    //     : window.innerHeight / 1.375;
-    const originX = window.innerWidth / 2
-    const originY = window.innerHeight / 2
+  // setBounds() {
+  //   // how far from the { x, y } origin can each orb move
+  //   const maxDist =
+  //     //   window.innerWidth < 200 ? window.innerWidth / 3 : window.innerWidth / 5
+  //     window.innerWidth < 200 ? window.innerWidth / 2 : window.innerWidth / 3
+  //   // the { x, y } origin for each orb (the bottom right of the screen)
+  //   // const originX = window.innerWidth / 1.25;
+  //   // const originY =
+  //   //   window.innerWidth < 1000
+  //   //     ? window.innerHeight
+  //   //     : window.innerHeight / 1.375;
+  //   const originX = window.innerWidth / 2
+  //   const originY = window.innerHeight / 2
 
-    // allow each orb to move x distance away from it's x / y origin
+  //   // allow each orb to move x distance away from it's x / y origin
+  //   return {
+  //     x: {
+  //       min: originX - maxDist,
+  //       max: originX + maxDist,
+  //     },
+  //     y: {
+  //       min: originY - maxDist,
+  //       max: originY + maxDist,
+  //     },
+  //   }
+  // }
+
+  setBounds(width, height) {
+    const maxDist =
+      window.innerWidth < 200
+        ? window.innerWidth / 1.5
+        : window.innerWidth / 2.5 // Adjusted values
+    const originX = width / 2
+    const originY = height / 2
+
     return {
       x: {
         min: originX - maxDist,
@@ -145,7 +165,7 @@ class Orb {
     }
   }
 
-  update() {
+  update(width, height) {
     // self similar "psuedo-random" or noise values at a given point in "time"
 
     const xNoise = simplex.noise2D(this.xOff, this.xOff)
@@ -161,6 +181,7 @@ class Orb {
     // step through "time"
     this.xOff += this.inc
     this.yOff += this.inc
+    this.bounds = this.setBounds(width, height)
   }
 
   render() {
@@ -226,7 +247,7 @@ function OrbCanvas({ parentRef }) {
     if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
       app.ticker.add(() => {
         orbs.current.forEach(orb => {
-          orb.update()
+          orb.update(parentSize.width, parentSize.height)
           orb.render()
         })
       })

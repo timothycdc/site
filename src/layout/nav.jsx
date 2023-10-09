@@ -37,7 +37,14 @@ export default function Nav({ children, title = 'Home', type, ...props }) {
             fontFamily: 'Inter',
           }}
         >
-          <Box sx={{ fontWeight: 600 }}>{title}</Box>
+          <Link
+            href={'/'}
+            sx={{
+              variant: 'linkStyles.animated',
+            }}
+          >
+            {title}
+          </Link>
           <ul
             sx={{
               marginBlockStart: '0em',
@@ -51,6 +58,7 @@ export default function Nav({ children, title = 'Home', type, ...props }) {
               <li
                 key={index}
                 sx={{
+                  variant: 'linkStyles.animated',
                   listStyle: 'none',
                   mb: 2,
                   ml: 0,

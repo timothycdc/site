@@ -282,7 +282,8 @@ module.exports = {
         web: [
           {
             name: `Inter`,
-            file: `https://fonts.googleapis.com/css?family=Inter:400,500,600,700&text=%09%20$%25%27()+,-.0123456789:;?@ABCDEFGHIKLMNOPRSTUVWXYZabcdefghijklmnopqrstuvwxyz%E2%80%93%E2%80%94%E2%80%99%E2%80%9C%E2%80%9D%E2%86%92%E2%86%97`,
+            file: `https://fonts.googleapis.com/css?family=Inter:400,500,600,700&text=%09%20$%25%27()+,-.0123456789:;?@ABCDEFGHIKLMNOPRSTUVWXYZabcdefghijklmnopqrstuvwxyz%E2%80%93%E2%80%94%E2%80%99%E2%80%9C%E2%80%9D%E2%86%92%E2%86%97%E2%86%91
+`,
             //file: `https://fonts.googleapis.com/css?family=Inter:400,500,600,700&text=%09%20$%25%27()+,-.0123456789:;?@ABCDEFGHIKLMNOPRSTUVWXYZabcdefghijklmnopqrstuvwxyz%E2%80%93%E2%80%94%E2%80%99%E2%80%9C%E2%80%9D%E2%86%92`,
             // specify custom glyphs for inter arrows https://github.com/google/fonts/issues/2382
           },
@@ -293,6 +294,10 @@ module.exports = {
           {
             name: `Libre Baskerville`,
             file: `https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital@1&display=swap`,
+          },
+          {
+            name: `Instrument Serif`,
+            file: `https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap`,
           },
         ],
       },

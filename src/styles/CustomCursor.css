@@ -1,0 +1,45 @@
+/* CustomCursor.css */
+.cursor {
+  position: fixed;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: #fff;
+  z-index: 9999;
+  opacity: 0;
+  border: 3px solid #20243a;
+  pointer-events: none;
+  margin: 0;
+  padding: 0;
+  transform: translate(-50%, -50%);
+}
+
+.follower {
+  position: fixed;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  z-index: 10000;
+  opacity: 0;
+  border: 2px solid rgba(255, 255, 255, 1);
+  mix-blend-mode: exclusion;
+  pointer-events: none;
+  margin: 0;
+  padding: 0;
+  transform: translate(-50%, -50%);
+}
+
+/* if backdrop support: very transparent and blurred */
+@supports (
+  (-webkit-backdrop-filter: invert(100%)) or (backdrop-filter: invert(100%))
+) {
+  .cursor {
+    backdrop-filter: invert(100%);
+    background-color: unset;
+    border: 0px;
+  }
+}
+
+.hidden {
+  display: none;
+}
